@@ -3,21 +3,22 @@
 #include <stdlib.h>
 #include <time.h>
 
+
+#define FAUX_RANDOM
+
+                                       // A  B  C  D   E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  };
+static const int occurences_lettres[] = { 9, 1, 2, 3, 14, 1, 1, 1, 7, 1, 0, 5, 3, 6, 5, 2, 1, 6, 7, 6, 5, 2 };
+
+static int pioche[sizeof(occurences_lettres)];
+
 // Initialisation de la pioche
 void initPioche(Pioche* p) {
-    p->tete = NULL;
-    p->taille = 0;
-    remplirPioche(p);
-    melangerPioche(p);
+    memcpy(pioche, occurences_lettres, sizeof(occurences_lettres));
 }
 
 // Remplir la pioche avec les lettres et leurs quantités
 void remplirPioche(Pioche* p) {
-    char lettres[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-                      'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V' };
-    int capacite[] = { 9, 1, 2, 3, 14, 1, 1, 1, 7, 1,
-                      5, 3, 6, 5, 2, 1, 6, 7, 6, 5, 2 };
-
+ /*
     for (int i = 0; i < sizeof(lettres) / sizeof(lettres[0]); i++) {
         for (int j = 0; j < capacite[i]; j++) {
             Noeud* nouveau = (Noeud*)malloc(sizeof(Noeud));
@@ -30,7 +31,7 @@ void remplirPioche(Pioche* p) {
             p->tete = nouveau; // Ajouter en tête de la liste
             p->taille++;
         }
-    }
+    }*/
 }
 
 void melangerPioche(Pioche* p) {
@@ -60,21 +61,34 @@ void melangerPioche(Pioche* p) {
     p->tete = tableau[0];
 }
 
+int getRandom() {
+#ifdef FAUX_RANDOM
+    static int rand_index = 0;
+    static const int faux_rand[] = {0,1,2,3,4,5,6,7,8,9,10,11, 12, // premier joueur avec test sur le K qui doit donner un autre tirage
+                           15,0,2,3,13,14,0,16,17,18,19,20 // 2eme joueur
+    };
+
+    if (rand_index >= sizeof(faux_rand)/sizeof(int)) {
+        // on a depassé le jeu de test, renvoie du vrai random
+        return rand() % sizeof(occurences_lettres);
+    }
+    else {
+        return faux_rand[rand_index++];
+    }
+#else
+    return rand() % sizeof(occurences_lettres);
+#endif
+}
+
 // Piocher une lettre
 char piocher(Pioche* p) {
-    if (!p->tete) {
-        printf("Pioche vide.\n");
-        return '\0';
+    while (1) {
+        int lettre_index = getRandom();
+        if (pioche[lettre_index] > 0) {
+            pioche[lettre_index]--;
+            return 'A'+ lettre_index;
+        }
     }
-
-    Noeud* tete = p->tete;
-    char lettre = tete->lettre;
-
-    p->tete = tete->suivant;
-    free(tete);
-    p->taille--;
-
-    return lettre;
 }
 
 // Libérer la mémoire allouée pour la pioche

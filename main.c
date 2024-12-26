@@ -5,13 +5,13 @@ int main() {
     initPioche(&pioche);
 
     Rail rail;
-    initRail(&rail, &pioche);
+    //initRail(&rail, &pioche);
 
     Joueur joueur1, joueur2;
     initJoueur(&joueur1, &pioche);
     initJoueur(&joueur2, &pioche);
 
-    afficherRail(&rail);
+    //afficherRail(&rail);
     afficherJoueur(&joueur1, 1);
     afficherJoueur(&joueur2, 2);
 
