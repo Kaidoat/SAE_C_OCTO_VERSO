@@ -1,26 +1,24 @@
-#ifndef SAE__OCTO_PIOCHE_H
-#define SAE__OCTO_PIOCHE_H
+#ifndef PIOCHE_H
+#define TAILLE_MAX_PIOCHE 88
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+// Structure pour un nœud dans la liste chaînée
+typedef struct Noeud {
+    char lettre;             // Lettre stockée
+    struct Noeud* suivant;   // Pointeur vers le prochain nœud
+} Noeud;
 
+// Structure pour la pioche
+typedef struct {
+    Noeud* tete;             // Pointeur vers le premier nœud de la liste
+    int taille;              // Nombre de lettres dans la pioche
+} Pioche;
 
-
-enum{CARTEJOUEUR=12, CARTEPIOCHE=64, CARTETOTAL=88, NB_JOUEURS=2};
-
-typedef struct{
-    char chevalet[CARTETOTAL];
-    int nbPioche;
-}Pioche;
-
-
-void initPioche(Pioche** p);
+// Prototypes des fonctions
+void initPioche(Pioche* p);
+void remplirPioche(Pioche* p);
 void melangerPioche(Pioche* p);
-char piocher(Pioche *p);
-void remplirPioche (Pioche *p);
+char piocher(Pioche* p);
+void libererPioche(Pioche* p);
 
+#endif
 
-
-
-#endif //SAE__OCTO_PIOCHE_H

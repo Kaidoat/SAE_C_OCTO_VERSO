@@ -1,25 +1,17 @@
-//#ifndef SAE__OCTO_RAIL_H
-//#define SAE__OCTO_RAIL_H
-//
-//#include <stdio.h>
-//#include <stdlib.h>
-//
-//
-//
-//enum {MAX_LETTRES = 8};
-//typedef enum{
-//    VERSO=0,
-//    RECTO=1
-//}RECTO_VERSO;
-//
-//
-//typedef struct Rail {
-//    Chevalet* lettres[MAX_LETTRES];
-//    RECTO_VERSO sens ;
-//} Rail;
-//
-//
-//Rail creer_railVide();
-//Chevalet ajouter_Chevalet(Chevalet*c);
-//int afficher_Rail(Rail *r);
-//#endif //SAE__OCTO_RAIL_H
+#ifndef RAIL_H
+#define RAIL_H
+
+#include "pioche.h"
+
+typedef struct {
+    char lettres[8]; // Le rail contient jusqu'à 8 lettres
+    int recto;       // 1 si recto, 0 si verso
+} Rail;
+
+// Prototypes
+void initRail(Rail* rail, Pioche* pioche);
+void afficherRail(const Rail* rail);
+int ajouterLettres(Rail* rail, const char* mot, char extremite);
+int retournerRail(Rail* rail);
+
+#endif

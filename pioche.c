@@ -1,42 +1,90 @@
 #include "pioche.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-void initPioche(Pioche** p){
-    *p = (Pioche*)malloc(sizeof(Pioche)); // Allouer dynamiquement la mémoire
-    if (*p == NULL) {
-        printf("Erreur d'allocation mémoire pour la pioche.\n");
-        exit(EXIT_FAILURE);
-    }
-    remplirPioche(*p);
-    melangerPioche(*p);
+// Initialisation de la pioche
+void initPioche(Pioche* p) {
+    p->tete = NULL;
+    p->taille = 0;
+    remplirPioche(p);
+    melangerPioche(p);
 }
-void melangerPioche(Pioche *p) {
-    // Initialiser la graine pour la fonction rand()
-    srand(time(NULL));
 
-    // Mélanger avec l'algorithme de Fisher-Yates
-    for (int i = p->nbPioche - 1; i > 0; i--) {
-        int j = rand() % (i + 1); // Choisir un index aléatoire
-        // Échanger les éléments p->chevalet[i] et p->chevalet[j]
-        char temp = p->chevalet[i];
-        p->chevalet[i] = p->chevalet[j];
-        p->chevalet[j] = temp;
-    }
-}
-char piocher(Pioche *p){}
-void remplirPioche (Pioche *p){
-    p->nbPioche =0;
-    char lettres[] = {'A','B', 'C',
-                      'D', 'E', 'F', 'G', 'H',
-                      'I', 'J', 'K', 'L', 'M', 'N',
-                      'O' ,'P', 'Q', 'R', 'S', 'T',
-                      'U', 'V' };
-    int capacite[]={9, 1, 2, 3 ,14 ,
-                    1, 1, 1, 7, 1, 0 ,5,
-                    3, 6 ,5 ,2 ,1 ,6 ,7, 6, 5, 2 };
+// Remplir la pioche avec les lettres et leurs quantités
+void remplirPioche(Pioche* p) {
+    char lettres[] = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+                      'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V' };
+    int capacite[] = { 9, 1, 2, 3, 14, 1, 1, 1, 7, 1,
+                      5, 3, 6, 5, 2, 1, 6, 7, 6, 5, 2 };
 
-    for (int i = 0 ; i< sizeof(lettres)/ sizeof(lettres[0]); i++){
-        for(int j = 0; j < capacite[i]; j ++){
-            p->chevalet [p->nbPioche] = lettres[i];
+    for (int i = 0; i < sizeof(lettres) / sizeof(lettres[0]); i++) {
+        for (int j = 0; j < capacite[i]; j++) {
+            Noeud* nouveau = (Noeud*)malloc(sizeof(Noeud));
+            if (!nouveau) {
+                perror("Erreur d'allocation mémoire");
+                exit(EXIT_FAILURE);
+            }
+            nouveau->lettre = lettres[i];
+            nouveau->suivant = p->tete;
+            p->tete = nouveau; // Ajouter en tête de la liste
+            p->taille++;
         }
     }
+}
+
+void melangerPioche(Pioche* p) {
+    if (p->taille < 2) return;
+
+    // Utiliser un tableau statique de taille maximale
+    Noeud* tableau[TAILLE_MAX_PIOCHE];
+
+    Noeud* courant = p->tete;
+    for (int i = 0; i < p->taille; i++) {
+        tableau[i] = courant;
+        courant = courant->suivant;
+    }
+
+    srand(time(NULL));
+    for (int i = p->taille - 1; i > 0; i--) {
+        int j = rand() % (i + 1);
+        Noeud* temp = tableau[i];
+        tableau[i] = tableau[j];
+        tableau[j] = temp;
+    }
+
+    for (int i = 0; i < p->taille - 1; i++) {
+        tableau[i]->suivant = tableau[i + 1];
+    }
+    tableau[p->taille - 1]->suivant = NULL;
+    p->tete = tableau[0];
+}
+
+// Piocher une lettre
+char piocher(Pioche* p) {
+    if (!p->tete) {
+        printf("Pioche vide.\n");
+        return '\0';
+    }
+
+    Noeud* tete = p->tete;
+    char lettre = tete->lettre;
+
+    p->tete = tete->suivant;
+    free(tete);
+    p->taille--;
+
+    return lettre;
+}
+
+// Libérer la mémoire allouée pour la pioche
+void libererPioche(Pioche* p) {
+    Noeud* courant = p->tete;
+    while (courant) {
+        Noeud* temp = courant;
+        courant = courant->suivant;
+        free(temp);
+    }
+    p->tete = NULL;
+    p->taille = 0;
 }

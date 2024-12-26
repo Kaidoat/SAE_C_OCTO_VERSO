@@ -1,20 +1,17 @@
-//#ifndef JEU_H
-//#define JEU_H
-//
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include "rail.h"
-//
-//
-//typedef struct Joueur {
-//    Chevalet* chevalets;  // Liste chaînée des chevalets du joueur
-//    int numero;           // Numéro du joueur
-//} Joueur;
-//
-//// Prototypes des fonctions
-//Joueur creerJoueur(int numero);
-//void initialiser_jeu(Joueur joueur[2], Rail* rail);
-//int verifier_mot(const char* mot, const Joueur* joueur, const Rail* rail);
-//
-//
-//#endif
+#ifndef JEU_H
+#define JEU_H
+
+#include "rail.h"
+
+typedef struct {
+    char chevalets[12]; // 12 lettres par joueur max
+    int nbLettres;
+} Joueur;
+
+// Prototypes
+void initJoueur(Joueur* joueur, Pioche* pioche);
+void afficherJoueur(const Joueur* joueur, int numero);
+int jouerTour(Joueur* joueur, Rail* rail, Pioche* pioche);
+int verifierVictoire(const Joueur* joueur);
+
+#endif
