@@ -6,5 +6,11 @@ set(CMAKE_C_STANDARD 11)
 include_directories(.)
 
 add_executable(sae__octo
-        chevalet.c
-        chevalet.h)
+        Jeu.c
+        Jeu.h
+        main.c
+        rail.c
+        rail.h
+        pioche.h
+        pioche.c
+)
