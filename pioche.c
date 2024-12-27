@@ -64,16 +64,16 @@ void melangerPioche(Pioche* p) {
 int getRandom() {
 #ifdef FAUX_RANDOM
     static int rand_index = 0;
-    static const int faux_rand[] = {0,1,2,3,4,5,6,7,8,9,10,11, 12, // premier joueur avec test sur le K qui doit donner un autre tirage
-                           15,0,2,3,13,14,0,16,17,18,19,20 // 2eme joueur
+    static const int faux_rand[] = { 'V','C','E','E','N','K','L','M','E','R','S','U','A', // premier joueur avec test sur le K qui doit donner un autre tirage
+                                     'A','B','D','E','I','L','N','O','R','R','T','U'// 2eme joueur
     };
-
+    
     if (rand_index >= sizeof(faux_rand)/sizeof(int)) {
         // on a depassé le jeu de test, renvoie du vrai random
         return rand() % sizeof(occurences_lettres);
     }
     else {
-        return faux_rand[rand_index++];
+        return faux_rand[rand_index++]-'A';
     }
 #else
     return rand() % sizeof(occurences_lettres);
@@ -81,7 +81,7 @@ int getRandom() {
 }
 
 // Piocher une lettre
-char piocher(Pioche* p) {
+char piocher() {
     while (1) {
         int lettre_index = getRandom();
         if (pioche[lettre_index] > 0) {

@@ -2,25 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 
-void initRail(Rail* rail, Pioche* pioche) {
-    for (int i = 0; i < 8; i++) {
-        rail->lettres[i] = '\0'; // Rail vide au départ
-    }
-    rail->recto = 1;
-    // Remplir le rail avec des lettres piochées
-    for (int i = 0; i < 8; i++) {
-        rail->lettres[i] = piocher(pioche);
-    }
+void initRail(Rail* rail) {
+    rail->recto[0] = 0;
 }
 
 void afficherRail(const Rail* rail) {
-    printf("Rail (%s): ", rail->recto ? "recto" : "verso");
-    for (int i = 0; i < 8; i++) {
-        if (rail->lettres[i] != '\0') {
-            printf("%c ", rail->lettres[i]);
-        }
-    }
-    printf("\n");
+    printf("R : %s\n", rail->recto);
 }
 
 int ajouterLettres(Rail* rail, const char* mot, char extremite) {
@@ -29,13 +16,13 @@ int ajouterLettres(Rail* rail, const char* mot, char extremite) {
 
     if (extremite == 'D') {
         // Ajouter à droite
-        memmove(rail->lettres + motLen, rail->lettres, 8 - motLen);
-        memcpy(rail->lettres, mot, motLen);
+        memmove(rail->recto + motLen, rail->recto, 8 - motLen);
+        memcpy(rail->recto, mot, motLen);
     }
     else if (extremite == 'G') {
         // Ajouter à gauche
-        memmove(rail->lettres, rail->lettres + motLen, 8 - motLen);
-        memcpy(rail->lettres + 8 - motLen, mot, motLen);
+        memmove(rail->recto, rail->recto + motLen, 8 - motLen);
+        memcpy(rail->recto + 8 - motLen, mot, motLen);
     }
     else {
         return 0; // Extrémité invalide
@@ -44,12 +31,11 @@ int ajouterLettres(Rail* rail, const char* mot, char extremite) {
 }
 
 int retournerRail(Rail* rail) {
-    rail->recto = !rail->recto;
     int i = 0, j = 7;
     while (i < j) {
-        char temp = rail->lettres[i];
-        rail->lettres[i] = rail->lettres[j];
-        rail->lettres[j] = temp;
+        char temp = rail->recto[i];
+        rail->recto[i] = rail->recto[j];
+        rail->recto[j] = temp;
         i++;
         j--;
     }
