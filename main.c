@@ -1,6 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "Jeu.h"
 
 int main() {
+
+
     Pioche pioche;
     initPioche(&pioche);
 
@@ -12,7 +17,10 @@ int main() {
     initJoueur(&joueur2, &pioche);
 
     //afficherRail(&rail);
+
+
     afficherJoueur(&joueur1, 1);
+
     afficherJoueur(&joueur2, 2);
 
     while (1) {

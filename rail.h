@@ -2,9 +2,10 @@
 #define RAIL_H
 
 #include "pioche.h"
+enum{MAX_RAIL=8};
 
 typedef struct {
-    char lettres[8]; // Le rail contient jusqu'à 8 lettres
+    char lettres[MAX_RAIL]; // Le rail contient jusqu'à 8 lettres
     int recto;       // 1 si recto, 0 si verso
 } Rail;
 

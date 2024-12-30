@@ -1,6 +1,7 @@
 #include "Jeu.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 void trie_chaine(char* chaine) {
     int echange = 0;
@@ -21,7 +22,7 @@ void trie_chaine(char* chaine) {
 
 void initJoueur(Joueur* joueur, Pioche* pioche) {
     joueur->nbLettres = 0;
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < MAX_CHEVALET; i++) {
         joueur->chevalets[i] = piocher(pioche);
         joueur->nbLettres++;
     }
@@ -30,7 +31,9 @@ void initJoueur(Joueur* joueur, Pioche* pioche) {
 
 void afficherJoueur(const Joueur* joueur, int numero) {
     printf("%d : ", numero);
+
     for (int i = 0; i < joueur->nbLettres; i++) {
+
         printf("%c", joueur->chevalets[i]);
     }
     printf("\n");
@@ -38,7 +41,7 @@ void afficherJoueur(const Joueur* joueur, int numero) {
 
 int jouerTour(Joueur* joueur, Rail* rail, Pioche* pioche) {
     printf("Saisissez votre mot : ");
-    char mot[9];
+    char mot[MAX_MOT];
     scanf("%s", mot);
 
     if (strcmp(mot, ".quit") == 0) {
@@ -70,3 +73,5 @@ int jouerTour(Joueur* joueur, Rail* rail, Pioche* pioche) {
 int verifierVictoire(const Joueur* joueur) {
     return joueur->nbLettres == 0;
 }
+
+
