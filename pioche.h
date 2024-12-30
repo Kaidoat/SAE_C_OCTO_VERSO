@@ -17,7 +17,7 @@ typedef struct {
 void initPioche(Pioche* p);
 void remplirPioche(Pioche* p);
 void melangerPioche(Pioche* p);
-char piocher(Pioche* p);
+char piocher();
 void libererPioche(Pioche* p);
 
 #endif
