@@ -20,20 +20,18 @@ void trie_chaine(char* chaine) {
     while (echange != 0);
 }
 
-void initJoueur(Joueur* joueur, Pioche* pioche) {
-    joueur->nbLettres = 0;
+void initJoueur(Joueur* joueur) {
+    joueur->nbLettres = MAX_CHEVALET; // Initialisation avec 12 lettres
     for (int i = 0; i < MAX_CHEVALET; i++) {
-        joueur->chevalets[i] = piocher(pioche);
-        joueur->nbLettres++;
+        joueur->chevalets[i] = 'A' + (rand() % 26); // Génère une lettre aléatoire
     }
-    trie_chaine(joueur->chevalets);
+    joueur->chevalets[MAX_CHEVALET] = '\0'; // Ajoute le caractère de fin
 }
 
+// Fonction pour afficher les lettres du chevalet d'un joueur
 void afficherJoueur(const Joueur* joueur, int numero) {
-    printf("%d : ", numero);
-
+    printf("Joueur %d : ", numero);
     for (int i = 0; i < joueur->nbLettres; i++) {
-
         printf("%c", joueur->chevalets[i]);
     }
     printf("\n");
@@ -74,4 +72,8 @@ int verifierVictoire(const Joueur* joueur) {
     return joueur->nbLettres == 0;
 }
 
+char piocher(Pioche* pioche) {
+    // Génère une lettre aléatoire entre 'A' et 'Z'
+    return 'A' + (rand() % 26);
+}
 

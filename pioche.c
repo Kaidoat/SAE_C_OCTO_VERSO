@@ -81,16 +81,8 @@ int getRandom() {
 #endif
 }
 
-// Piocher une lettre
-char piocher() {
-    while (1) {
-        int lettre_index = getRandom();
-        if (pioche[lettre_index] > 0) {
-            pioche[lettre_index]--;
-            return 'A'+ lettre_index;
-        }
-    }
-}
+
+
 
 // Libérer la mémoire allouée pour la pioche
 void libererPioche(Pioche* p) {
