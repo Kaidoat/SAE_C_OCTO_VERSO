@@ -1,7 +1,7 @@
 #ifndef RAIL_H
 #define RAIL_H
 
-#include "pioche.h"
+
 enum{MAX_RAIL=8};
 
 typedef struct {
@@ -10,7 +10,7 @@ typedef struct {
 } Rail;
 
 // Prototypes
-void initRail(Rail* rail, Pioche* pioche);
+//void initRail(Rail* rail, Pioche* pioche);
 void afficherRail(const Rail* rail);
 int ajouterLettres(Rail* rail, const char* mot, char extremite);
 int retournerRail(Rail* rail);

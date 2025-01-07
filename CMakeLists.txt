@@ -11,6 +11,8 @@ add_executable(sae__octo
         main.c
         rail.c
         rail.h
-        pioche.h
-        pioche.c
+        dictionnaire.h
+        dictionnaire.c
+        joueur.h
+        joueur.c
 )

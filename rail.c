@@ -2,16 +2,16 @@
 #include <stdio.h>
 #include <string.h>
 
-void initRail(Rail* rail, Pioche* pioche) {
-    for (int i = 0; i < MAX_RAIL; i++) {
-        rail->lettres[i] = '\0'; // Rail vide au départ
-    }
-    rail->recto = 1;
-    // Remplir le rail avec des lettres piochées
-    for (int i = 0; i < MAX_RAIL; i++) {
-        rail->lettres[i] = piocher(pioche);
-    }
-}
+//void initRail(Rail* rail, Pioche* pioche) {
+//    for (int i = 0; i < MAX_RAIL; i++) {
+//        rail->lettres[i] = '\0'; // Rail vide au départ
+//    }
+//    rail->recto = 1;
+//    // Remplir le rail avec des lettres piochées
+//    for (int i = 0; i < MAX_RAIL; i++) {
+//        rail->lettres[i] = piocher(pioche);
+//    }
+//}
 
 void afficherRail(const Rail* rail) {
     printf("Rail (%s): ", rail->recto ? "recto" : "verso");
