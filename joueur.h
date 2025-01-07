@@ -5,6 +5,7 @@
 #define JEU_H
 
 #include <stdio.h>
+#include <stdbool.h>
 
 enum { MAX_CHEVALET = 12, MAX_MOT = 4, TAILLE_CHEVALET = 12 , MAX_TAILLE_CHEVALETS=20, TAILLE_LETTRES=88};
 
@@ -27,6 +28,8 @@ void initialiser_lettres(Lettre lettres[], int* taille_sac);
 void melanger_lettres(Lettre lettres[], int taille);
 void initJoueur(Joueur* joueur, int numero, Lettre* sac, int* taille_sac);
 void afficherJoueur(const Joueur* joueur);
+bool verifLettre(const Joueur* joueur, int nbLettres, const char* mot);
+void demanderMot(const Joueur* joueur, char *mot, const bool premierTour);
 
 
 #endif

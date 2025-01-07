@@ -11,7 +11,7 @@ typedef struct {
 } Rail;
 
 // Prototypes
-void initRail(Rail* rail, char mot1, char mot2);
+void initRail(Rail* rail, char *mot1, char *mot2);
 void afficherRail(const Rail* rail);
 int ajouterLettres(Rail* rail, const char* mot, char extremite);
 int retournerRail(Rail* rail);

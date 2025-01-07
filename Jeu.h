@@ -10,6 +10,5 @@ typedef struct{
     int joueurActuelle;
 }Jeu;
 
-void demanderMot(Jeu* j, char mot[MAX_MOT]);
 void joueurSuivant(Jeu* j);
 

@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include "joueur.h"
+#include <stdbool.h>
+#include <string.h>
+#include "dictionnaire.h"
 
 // Fonction pour initialiser les lettres du sac
 void initialiser_lettres(Lettre lettres[], int* taille_sac) {
@@ -51,3 +54,45 @@ void afficherJoueur(const Joueur* joueur) {
     }
     printf("\n");
 }
+
+bool verifLettre(const Joueur* joueur, int nbLettres, const char* mot) {
+    Joueur tmp = *joueur; // Copie du joueur
+    int cpt = nbLettres;  // Compteur de lettres à trouver
+
+    for (int i = 0; i < nbLettres; i++) {
+        bool lettreTrouvee = false; // Indique si la lettre est trouvée dans le chevalet
+
+        for (int j = 0; j < tmp.nbLettres; j++) {
+            if (tmp.chevalets[j] == mot[i]) {
+                // Lettre trouvée, on la "consomme" en la remplaçant
+                tmp.chevalets[j] = '0'; // Marquer la lettre comme utilisée
+                lettreTrouvee = true;
+                cpt--; // Réduire le compteur
+                break; // Sortir de la boucle interne (inutile de chercher davantage)
+            }
+        }
+
+        if (!lettreTrouvee) {
+            // Si la lettre n'est pas trouvée, on peut immédiatement retourner false
+            return false;
+        }
+    }
+
+    // Si toutes les lettres ont été trouvées, le compteur doit être à 0
+    return (cpt == 0);
+}
+
+void demanderMot(const Joueur* joueur, char *mot, const bool premierTour) {
+    printf("%d>", joueur->numero);
+    scanf("%s", mot); // Correction ici, pas besoin de &mot
+
+    if (premierTour) {
+        while (strlen(mot) != 4 || estDansDictionnaire(mot) == 0 || !verifLettre(joueur, strlen(mot), mot)) { // Prblm : reste dans la boucle
+            printf("%d>", joueur->numero);                                                                     // résoudre : teste 1 par 1 chaque condition
+            scanf("%s", mot); // Toujours scanf sans &mot
+        }
+    }
+
+}
+
+
