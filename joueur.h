@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-enum { MAX_CHEVALET = 12, MAX_MOT = 4, TAILLE_CHEVALET = 12 , MAX_TAILLE_CHEVALETS=20};
+enum { MAX_CHEVALET = 12, MAX_MOT = 4, TAILLE_CHEVALET = 12 , MAX_TAILLE_CHEVALETS=20, TAILLE_LETTRES=88};
 
 // Structure pour représenter un joueur
 typedef struct {
@@ -19,6 +19,7 @@ typedef struct {
 typedef struct {
     char lettre;
     int quantite;
+
 } Lettre;
 
 // Prototypes des fonctions
