@@ -50,7 +50,9 @@ void initJoueur(Joueur* joueur, int numero, Lettre* sac, int* taille_sac) {
 void afficherJoueur(const Joueur* joueur) {
     printf("%d : ", joueur->numero);
     for (int i = 0; i < joueur->nbLettres; i++) {
-        printf("%c", joueur->chevalets[i]);
+        if(joueur->chevalets[i] != '0') {
+            printf("%c", joueur->chevalets[i]);
+        }
     }
     printf("\n");
 }
@@ -58,17 +60,18 @@ void afficherJoueur(const Joueur* joueur) {
 bool verifLettre(Joueur* joueur, int nbLettres, const char* mot) {
     // On travaille directement sur le chevalet du joueur
     bool lettresValides = true; // Indicateur pour vérifier la validité du mot
+    Joueur tmp = *joueur;
 
     // Vérification des lettres
     for (int i = 0; i < nbLettres; i++) {
         bool lettreTrouvee = false; // Indicateur si la lettre est trouvée dans le chevalet
 
         // Parcourir toutes les lettres du chevalet du joueur pour trouver une correspondance
-        for (int j = 0; j < joueur->nbLettres; j++) {
-            if (joueur->chevalets[j] == mot[i]) {
+        for (int j = 0; j < tmp.nbLettres; j++) {
+            if (tmp.chevalets[j] == mot[i]) {
                 // Lettre trouvée, on l'a juste trouvée, mais on ne la consomme pas encore
                 lettreTrouvee = true;
-                joueur->chevalets[j] = '0'; // Marquer la lettre comme utilisée
+                tmp.chevalets[j] = '0'; // Marquer la lettre comme utilisée
                 break; // Sortir de la boucle interne (inutile de chercher plus loin)
             }
         }
@@ -80,13 +83,19 @@ bool verifLettre(Joueur* joueur, int nbLettres, const char* mot) {
         }
     }
 
+    if(lettresValides) {
+        for (int i = 0; i < tmp.nbLettres; i++) {
+            joueur->chevalets[i] = tmp.chevalets[i];
+        }
+    }
+
     return lettresValides; // Retourne vrai si toutes les lettres sont valides
 }
 
 
 
 
-void demanderMot(const Joueur* joueur, char *mot, const bool premierTour) {
+void demanderMot(Joueur* joueur, char *mot, const bool premierTour) {
 
     do {
         printf("%d>", joueur->numero);

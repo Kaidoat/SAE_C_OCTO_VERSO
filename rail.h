@@ -2,7 +2,7 @@
 #define RAIL_H
 
 
-enum{MAX_RAIL=8,MAX_TOUR1=4};
+enum{MAX_RAIL=9,MAX_TOUR1=4};
 
 typedef struct {
     char lettres[MAX_RAIL]; // Le rail contient jusqu'à 8 lettres

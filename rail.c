@@ -21,7 +21,7 @@ void afficherRail(const Rail *rail) {
     if (rail != NULL && rail->lettres[0] != '\0') {
         printf("Rail : %s\n", rail->lettres);
         printf("R : %d\n", rail->recto);
-        printf("Longueur : %d\n", rail->longueur+1);
+        printf("Longueur : %d\n", rail->longueur);
     } else {
         printf("Le rail est vide ou invalide.\n");
     }
