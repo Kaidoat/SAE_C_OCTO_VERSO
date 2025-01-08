@@ -2,13 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void initRail(Rail *rail, char *mot1,  char *mot2) {
-    // Validation des entrées : s'assurer que les mots ont exactement 4 lettres
-    if (strlen(mot1) != 4 || strlen(mot2) != 4) {
-        printf("Erreur : Les mots doivent contenir exactement 4 lettres chacun.\n");
-        return;
-    }
-
+void initRail(Rail *rail, const char *mot1, const char *mot2) {
     // Comparer les mots et les ajouter dans l'ordre alphabétique
     if (strcmp(mot1, mot2) < 0) {
         snprintf(rail->lettres, sizeof(rail->lettres), "%s%s", mot1, mot2);
@@ -21,9 +15,15 @@ void initRail(Rail *rail, char *mot1,  char *mot2) {
     rail->longueur = strlen(rail->lettres);
 }
 
-void afficherRail(const Rail *rail) {
-    printf("Rail : %s\n", rail->lettres);
-    printf("Recto : %d\n", rail->recto);
-    printf("Longueur : %d\n", rail->longueur);
 
+void afficherRail(const Rail *rail) {
+    // Vérifier si la chaîne 'lettres' contient bien des caractères
+    if (rail != NULL && rail->lettres[0] != '\0') {
+        printf("Rail : %s\n", rail->lettres);
+        printf("R : %d\n", rail->recto);
+        printf("Longueur : %d\n", rail->longueur+1);
+    } else {
+        printf("Le rail est vide ou invalide.\n");
+    }
 }
+

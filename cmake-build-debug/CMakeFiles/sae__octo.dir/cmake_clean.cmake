@@ -9,6 +9,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/sae__octo.dir/main.c.obj.d"
   "CMakeFiles/sae__octo.dir/rail.c.obj"
   "CMakeFiles/sae__octo.dir/rail.c.obj.d"
+  "CMakeFiles/sae__octo.dir/test.c.obj"
+  "CMakeFiles/sae__octo.dir/test.c.obj.d"
   "libsae__octo.dll.a"
   "sae__octo.exe"
   "sae__octo.exe.manifest"

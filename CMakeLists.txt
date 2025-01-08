@@ -15,4 +15,5 @@ add_executable(sae__octo
         dictionnaire.c
         joueur.h
         joueur.c
+        test.c
 )

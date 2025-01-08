@@ -28,7 +28,7 @@ void initialiser_lettres(Lettre lettres[], int* taille_sac);
 void melanger_lettres(Lettre lettres[], int taille);
 void initJoueur(Joueur* joueur, int numero, Lettre* sac, int* taille_sac);
 void afficherJoueur(const Joueur* joueur);
-bool verifLettre(const Joueur* joueur, int nbLettres, const char* mot);
+bool verifLettre(Joueur* joueur, int nbLettres, const char* mot);
 void demanderMot(const Joueur* joueur, char *mot, const bool premierTour);
 
 

@@ -29,7 +29,7 @@
         afficherJoueur(&joueur2);
         demanderMot(&joueur1, &mot1,premierTour);
         demanderMot(&joueur2, &mot2,premierTour);
-        //initRail(&r, mot1, mot2);
+        initRail(&r, &mot1, &mot2);
         afficherRail(&r);
 
 

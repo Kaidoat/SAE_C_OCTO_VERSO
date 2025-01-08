@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+
 #include "joueur.h"
 #include <stdbool.h>
 #include <string.h>
@@ -48,51 +48,77 @@ void initJoueur(Joueur* joueur, int numero, Lettre* sac, int* taille_sac) {
 
 // Fonction pour afficher le chevalet d'un joueur
 void afficherJoueur(const Joueur* joueur) {
-    printf("Joueur %d : ", joueur->numero);
+    printf("%d : ", joueur->numero);
     for (int i = 0; i < joueur->nbLettres; i++) {
         printf("%c", joueur->chevalets[i]);
     }
     printf("\n");
 }
 
-bool verifLettre(const Joueur* joueur, int nbLettres, const char* mot) {
-    Joueur tmp = *joueur; // Copie du joueur
-    int cpt = nbLettres;  // Compteur de lettres à trouver
+bool verifLettre(Joueur* joueur, int nbLettres, const char* mot) {
+    // On travaille directement sur le chevalet du joueur
+    bool lettresValides = true; // Indicateur pour vérifier la validité du mot
 
+    // Vérification des lettres
     for (int i = 0; i < nbLettres; i++) {
-        bool lettreTrouvee = false; // Indique si la lettre est trouvée dans le chevalet
+        bool lettreTrouvee = false; // Indicateur si la lettre est trouvée dans le chevalet
 
-        for (int j = 0; j < tmp.nbLettres; j++) {
-            if (tmp.chevalets[j] == mot[i]) {
-                // Lettre trouvée, on la "consomme" en la remplaçant
-                tmp.chevalets[j] = '0'; // Marquer la lettre comme utilisée
+        // Parcourir toutes les lettres du chevalet du joueur pour trouver une correspondance
+        for (int j = 0; j < joueur->nbLettres; j++) {
+            if (joueur->chevalets[j] == mot[i]) {
+                // Lettre trouvée, on l'a juste trouvée, mais on ne la consomme pas encore
                 lettreTrouvee = true;
-                cpt--; // Réduire le compteur
-                break; // Sortir de la boucle interne (inutile de chercher davantage)
+                joueur->chevalets[j] = '0'; // Marquer la lettre comme utilisée
+                break; // Sortir de la boucle interne (inutile de chercher plus loin)
             }
         }
 
         if (!lettreTrouvee) {
-            // Si la lettre n'est pas trouvée, on peut immédiatement retourner false
-            return false;
+            // Si une lettre n'est pas trouvée dans le chevalet, le mot est invalide
+            lettresValides = false;
+            break; // Sortir de la boucle, inutile de continuer la vérification
         }
     }
 
-    // Si toutes les lettres ont été trouvées, le compteur doit être à 0
-    return (cpt == 0);
+    return lettresValides; // Retourne vrai si toutes les lettres sont valides
 }
+
+
+
 
 void demanderMot(const Joueur* joueur, char *mot, const bool premierTour) {
-    printf("%d>", joueur->numero);
-    scanf("%s", mot); // Correction ici, pas besoin de &mot
 
-    if (premierTour) {
-        while (strlen(mot) != 4 || estDansDictionnaire(mot) == 0 || !verifLettre(joueur, strlen(mot), mot)) { // Prblm : reste dans la boucle
-            printf("%d>", joueur->numero);                                                                     // résoudre : teste 1 par 1 chaque condition
-            scanf("%s", mot); // Toujours scanf sans &mot
+    do {
+        printf("%d>", joueur->numero);
+        scanf("%s", mot);
+
+        // Vérifie les conditions du mot
+        if (premierTour) {
+            // Conditions spécifiques pour le premier tour
+            if (strlen(mot) != 4) {
+                printf("caca1\n");
+
+            } else if (estDansDictionnaire(mot) == 0) {
+                printf("caca2\n");
+            } else if (!verifLettre(joueur, strlen(mot), mot)) {
+                printf("caca3\n");
+            } else {
+                break; // Toutes les conditions sont remplies, on sort de la boucle
+            }
+        } else {
+            // Conditions pour les joueurs suivants
+            if (estDansDictionnaire(mot) == 0) {
+                printf("caca4\n");
+
+            } else if (!verifLettre(joueur, strlen(mot), mot)) {
+                printf("caca5\n");
+
+            } else {
+                break; // Toutes les conditions sont remplies, on sort de la boucle
+            }
         }
-    }
-
+    } while (1); // Continue de demander tant que les conditions ne sont pas respectées
 }
+
 
 

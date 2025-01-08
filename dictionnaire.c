@@ -17,7 +17,7 @@ int estDansDictionnaire(const char* mot) {
         ligne[strcspn(ligne, "\n")] = '\0';
 
         // Compare le mot avec la ligne actuelle
-        if (strcmp(ligne, &mot) == 0) {
+        if (strcmp(ligne, mot) == 0) {
             fclose(fichier); // Ferme le fichier
             return 1; // Mot trouvé
         }
