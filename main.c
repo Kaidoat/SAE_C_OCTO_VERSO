@@ -6,6 +6,8 @@
 #include "jeu.h"
 #include "rail.h"
 #include "joueur.h"
+#include "Lettre.h"
+#include "Pile.h"
 
 
 
@@ -14,6 +16,8 @@
 
         // Initialisation des lettres dans le sac
         Lettre lettres[TAILLE_LETTRES];
+        Pile talon;
+        Pile expose;
         int taille_sac;
         Rail r;
         Jeu j;
@@ -23,9 +27,12 @@
         char mot1[MAX_RAIL],mot2[MAX_RAIL];
 
         initialiser_lettres(lettres, &taille_sac);
-        melanger_lettres(lettres, taille_sac);
-        initJoueur(&joueur1, 1, lettres, &taille_sac);
-        initJoueur(&joueur2, 2, lettres, &taille_sac);
+        initialiser(&talon, TAILLE_LETTRES);
+        initialiser(&expose, TAILLE_LETTRES);
+        initTalon(&talon, lettres);
+        melanger(&talon);
+        initJoueur(&joueur1, 1, &talon);
+        initJoueur(&joueur2, 2, &talon);
         afficherJoueur(&joueur1);
         afficherJoueur(&joueur2);
         demanderMot(&joueur1, mot1,premierTour);
@@ -34,11 +41,9 @@
         afficherRailRecto(&r);
         retournerRail(&r);
         afficherRailVerso(&r);
-        verifJoueur(&joueur1);
-        verifJoueur(&joueur2);
 
-
-
-        // faire une fonction qui verifie qu'un joueur n'a plus de lettre dans son chevalet
-        // compter le nombre de '0' dans le chevalet
+        premierTour = false;
+        while (!verifJoueur(&joueur1) || !verifJoueur(&joueur2)) {
+            // faire un scanf pour savoir quel commande le joueur joue
+        }
     }

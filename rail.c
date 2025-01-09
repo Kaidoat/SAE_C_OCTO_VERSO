@@ -3,7 +3,7 @@
 #include <string.h>
 
 void initRail(Rail *rail, const char *mot1, const char *mot2) {
-    // Comparer les mots et les ajouter dans l'ordre alphabétique
+    // Comparer les mots et les ajouter dans l'ordre alphab?tique
     if (strcmp(mot1, mot2) < 0) {
         snprintf(rail->lettres, sizeof(rail->lettres), "%s%s", mot1, mot2);
     } else {
@@ -11,13 +11,13 @@ void initRail(Rail *rail, const char *mot1, const char *mot2) {
     }
 
     // Initialiser les autres champs de la structure
-    rail->recto = 1; // Par défaut, on initialise à recto
+    rail->recto = 1; // Par d?faut, on initialise ? recto
     rail->longueur = strlen(rail->lettres);
 }
 
 
 void afficherRailRecto(const Rail *rail) {
-    // Vérifier si la chaîne 'lettres' contient bien des caractères
+    // V?rifier si la cha?ne 'lettres' contient bien des caract?res
     if (rail != NULL && rail->lettres[0] != '\0') {
         printf("R : %s\n", rail->lettres);
 
@@ -29,7 +29,7 @@ void afficherRailRecto(const Rail *rail) {
 
 
 void afficherRailVerso(const Rail *rail) {
-    // Vérifier si la chaîne 'lettres' contient bien des caractères
+    // V?rifier si la cha?ne 'lettres' contient bien des caract?res
     if (rail != NULL && rail->lettres[0] != '\0') {
         printf("V : %s\n", rail->lettres);
 
@@ -41,7 +41,7 @@ void afficherRailVerso(const Rail *rail) {
 
 int retournerRail(Rail *rail) {
         if (rail == NULL || rail->longueur == 0) {
-            return 0; // Échec si le rail est invalide
+            return 0; // ?chec si le rail est invalide
         }
 
         // Inverser l'ordre des lettres dans le rail
@@ -56,7 +56,7 @@ int retournerRail(Rail *rail) {
         // Basculer entre recto (1) et verso (0)
         rail->recto = !rail->recto;
 
-        return 1; // Succès
+        return 1; // Succ?s
     }
 
 
