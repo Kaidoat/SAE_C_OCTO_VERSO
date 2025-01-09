@@ -86,10 +86,12 @@ bool verifLettre(Joueur* joueur, int nbLettres, const char* mot) {
     if(lettresValides) {
         for (int i = 0; i < tmp.nbLettres; i++) {
             joueur->chevalets[i] = tmp.chevalets[i];
+
         }
     }
 
     return lettresValides; // Retourne vrai si toutes les lettres sont valides
+
 }
 
 
@@ -105,29 +107,45 @@ void demanderMot(Joueur* joueur, char *mot, const bool premierTour) {
         if (premierTour) {
             // Conditions spécifiques pour le premier tour
             if (strlen(mot) != 4) {
-                printf("caca1\n");
+
 
             } else if (estDansDictionnaire(mot) == 0) {
-                printf("caca2\n");
+
             } else if (!verifLettre(joueur, strlen(mot), mot)) {
-                printf("caca3\n");
+
             } else {
                 break; // Toutes les conditions sont remplies, on sort de la boucle
             }
         } else {
             // Conditions pour les joueurs suivants
             if (estDansDictionnaire(mot) == 0) {
-                printf("caca4\n");
+
 
             } else if (!verifLettre(joueur, strlen(mot), mot)) {
-                printf("caca5\n");
+
 
             } else {
                 break; // Toutes les conditions sont remplies, on sort de la boucle
             }
         }
     } while (1); // Continue de demander tant que les conditions ne sont pas respectées
+
 }
 
 
+// Fonction pour vérifier si un joueur n'a plus de lettres dans son chevalet
+bool joueurSansLettre(const Joueur* joueur) {
+    return joueur->nbLettres == 0;
+}
+
+int verifJoueur(Joueur* joueur){
+
+    if (joueurSansLettre(joueur)) {
+        return 1;
+    } else {
+        return 0;
+    }
+
+
+}
 

@@ -16,14 +16,49 @@ void initRail(Rail *rail, const char *mot1, const char *mot2) {
 }
 
 
-void afficherRail(const Rail *rail) {
+void afficherRailRecto(const Rail *rail) {
     // Vérifier si la chaîne 'lettres' contient bien des caractères
     if (rail != NULL && rail->lettres[0] != '\0') {
-        printf("Rail : %s\n", rail->lettres);
-        printf("R : %d\n", rail->recto);
-        printf("Longueur : %d\n", rail->longueur);
+        printf("R : %s\n", rail->lettres);
+
     } else {
         printf("Le rail est vide ou invalide.\n");
     }
 }
+
+
+
+void afficherRailVerso(const Rail *rail) {
+    // Vérifier si la chaîne 'lettres' contient bien des caractères
+    if (rail != NULL && rail->lettres[0] != '\0') {
+        printf("V : %s\n", rail->lettres);
+
+    } else {
+        printf("Le rail est vide ou invalide.\n");
+    }
+}
+
+
+int retournerRail(Rail *rail) {
+        if (rail == NULL || rail->longueur == 0) {
+            return 0; // Échec si le rail est invalide
+        }
+
+        // Inverser l'ordre des lettres dans le rail
+        int i, j;
+        char temp;
+        for (i = 0, j = rail->longueur - 1; i < j; i++, j--) {
+            temp = rail->lettres[i];
+            rail->lettres[i] = rail->lettres[j];
+            rail->lettres[j] = temp;
+        }
+
+        // Basculer entre recto (1) et verso (0)
+        rail->recto = !rail->recto;
+
+        return 1; // Succès
+    }
+
+
+
 

@@ -1,5 +1,5 @@
 CMakeFiles/sae__octo.dir/dictionnaire.c.obj: \
- C:\Users\Celthans\CLionProjects\pacacaca\dictionnaire.c \
+ C:\Users\Celthans\CLionProjects\mehdi\dictionnaire.c \
  C:/Program\ Files/JetBrains/CLion\ 2023.3.2/bin/mingw/x86_64-w64-mingw32/include/stdio.h \
  C:/Program\ Files/JetBrains/CLion\ 2023.3.2/bin/mingw/x86_64-w64-mingw32/include/corecrt_stdio_config.h \
  C:/Program\ Files/JetBrains/CLion\ 2023.3.2/bin/mingw/x86_64-w64-mingw32/include/corecrt.h \
@@ -19,4 +19,4 @@ CMakeFiles/sae__octo.dir/dictionnaire.c.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2023.3.2/bin/mingw/x86_64-w64-mingw32/include/sec_api/sys/timeb_s.h \
  C:/Program\ Files/JetBrains/CLion\ 2023.3.2/bin/mingw/x86_64-w64-mingw32/include/_timeval.h \
  C:/Program\ Files/JetBrains/CLion\ 2023.3.2/bin/mingw/x86_64-w64-mingw32/include/pthread_time.h \
- C:\Users\Celthans\CLionProjects\pacacaca\dictionnaire.h
+ C:\Users\Celthans\CLionProjects\mehdi\dictionnaire.h

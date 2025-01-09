@@ -31,7 +31,13 @@
         demanderMot(&joueur1, mot1,premierTour);
         demanderMot(&joueur2, mot2,premierTour);
         initRail(&r, mot1, mot2);
-        afficherRail(&r);
+        afficherRailRecto(&r);
+        retournerRail(&r);
+        afficherRailVerso(&r);
+        verifJoueur(&joueur1);
+        verifJoueur(&joueur2);
+
+
 
         // faire une fonction qui verifie qu'un joueur n'a plus de lettre dans son chevalet
         // compter le nombre de '0' dans le chevalet
