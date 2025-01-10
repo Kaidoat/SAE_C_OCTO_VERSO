@@ -26,6 +26,7 @@ bool verifLettre(Joueur* joueur, int nbLettres, const char* mot);
 void demanderMot(Joueur* joueur, char *mot, const bool premierTour);
 bool joueurSansLettre(const Joueur* joueur);
 int verifJoueur(Joueur* joueur);
+bool piocherLettre(Joueur* joueur, Pile* talon, Pile* expose);
 
 
 

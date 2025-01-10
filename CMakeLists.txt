@@ -16,4 +16,7 @@ add_executable(sae__octo
         joueur.h
         joueur.c
         test.c
+        Lettre.h
+        Lettre.c
+        Pile.c
 )

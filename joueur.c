@@ -33,7 +33,7 @@ int comparerLettres(const void *a, const void *b) {
 void afficherJoueur(const Joueur* joueur) {
     qsort(joueur->chevalets, joueur->nbLettres, sizeof(char), comparerLettres);
     printf("%d : ", joueur->numero);
-    for (int i = 0; i < joueur->nbLettres; i++) {
+    for (int i = 0; i < MAX_CHEVALET; i++) {
         if(joueur->chevalets[i] != '0') {
             printf("%c", joueur->chevalets[i]);
         }
@@ -129,7 +129,35 @@ int verifJoueur(Joueur* joueur){
     } else {
         return 0;
     }
-
-
 }
+
+int verifUneLettre(Joueur* joueur, char lettre) {
+    for (int i = 0; i < MAX_CHEVALET; i++) {
+        if (joueur->chevalets[i] == lettre) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+bool piocherLettre(Joueur* joueur, Pile* talon, Pile* expose) {
+    char lettre;
+    scanf("%c", &lettre);
+    getchar();
+
+
+    int verifLettre = verifUneLettre(joueur, lettre);
+    if (verifLettre == -1) {
+        return true;
+    }
+
+    Lettre lettreExpose = {joueur->chevalets[verifLettre], 0};
+    printf("%c\n", lettreExpose.lettre);
+    empiler(expose, lettreExpose);
+    joueur->chevalets[verifLettre] = sommet(talon).lettre;
+    printf("%c\n", joueur->chevalets[verifLettre]);
+    depiler(talon);
+    return false;
+}
+
 
