@@ -10,7 +10,7 @@
 #include "Pile.h"
 #pragma warning(disable:4996)
 
-enum {MAX_LETTRES_MOTS = 10, MAX_JOUEUR=2};
+enum {MAX_JOUEUR=2};
 
     int main() {
         srand(time(NULL)); // Initialiser le générateur de nombres aléatoires
@@ -54,6 +54,7 @@ enum {MAX_LETTRES_MOTS = 10, MAX_JOUEUR=2};
                 afficherRailRecto(&r);
                 retournerRail(&r);
                 afficherRailVerso(&r);
+                retournerRail(&r);
                 printf("%d>    ", i+1);
                 scanf(" %c",&commande);
                 getchar();
@@ -63,11 +64,13 @@ enum {MAX_LETTRES_MOTS = 10, MAX_JOUEUR=2};
                 }
                 if (commande == 'R') {
                     //appel fonction PoserMotRecto
-                    printf("R");
+                    rejouer = demanderMotRV(&joueur[i], &r);
                 }
                 if (commande == 'V') {
                     //appel fonction PoserMotVerso
-                    printf("V");
+                    retournerRail(&r);
+                    rejouer = demanderMotRV(&joueur[i], &r);
+                    retournerRail(&r);
                 }
                 if (commande == 'r') {
                     //appel fonction petitR

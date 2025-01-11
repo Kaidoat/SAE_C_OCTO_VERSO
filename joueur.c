@@ -6,7 +6,7 @@
 #include <string.h>
 #include "dictionnaire.h"
 #include "Pile.h"
-
+#include "rail.h"
 
 // Fonction pour initialiser un joueur avec des lettres du sac
 void initJoueur(Joueur* joueur, int numero, Pile *talon) {
@@ -51,7 +51,7 @@ bool verifLettre(Joueur* joueur, int nbLettres, const char* mot) {
         bool lettreTrouvee = false; // Indicateur si la lettre est trouvée dans le chevalet
 
         // Parcourir toutes les lettres du chevalet du joueur pour trouver une correspondance
-        for (int j = 0; j < tmp.nbLettres; j++) {
+        for (int j = 0; j < MAX_CHEVALET; j++) {
             if (tmp.chevalets[j] == mot[i]) {
                 // Lettre trouvée, on l'a juste trouvée, mais on ne la consomme pas encore
                 lettreTrouvee = true;
@@ -68,7 +68,7 @@ bool verifLettre(Joueur* joueur, int nbLettres, const char* mot) {
     }
 
     if(lettresValides) {
-        for (int i = 0; i < tmp.nbLettres; i++) {
+        for (int i = 0; i < MAX_CHEVALET; i++) {
             joueur->chevalets[i] = tmp.chevalets[i];
         }
         joueur->nbLettres -= nbLettres;
@@ -96,17 +96,6 @@ void demanderMot(Joueur* joueur, char *mot, const bool premierTour) {
             } else if (estDansDictionnaire(mot) == 0) {
 
             } else if (!verifLettre(joueur, strlen(mot), mot)) {
-
-            } else {
-                break; // Toutes les conditions sont remplies, on sort de la boucle
-            }
-        } else {
-            // Conditions pour les joueurs suivants
-            if (estDansDictionnaire(mot) == 0) {
-
-
-            } else if (!verifLettre(joueur, strlen(mot), mot)) {
-
 
             } else {
                 break; // Toutes les conditions sont remplies, on sort de la boucle
@@ -152,12 +141,114 @@ bool piocherLettre(Joueur* joueur, Pile* talon, Pile* expose) {
     }
 
     Lettre lettreExpose = {joueur->chevalets[verifLettre], 0};
-    printf("%c\n", lettreExpose.lettre);
     empiler(expose, lettreExpose);
     joueur->chevalets[verifLettre] = sommet(talon).lettre;
-    printf("%c\n", joueur->chevalets[verifLettre]);
     depiler(talon);
     return false;
 }
 
+void remise_forme(const char *value, char compo, char *result) {
+    int longueur = strlen(value); // Longueur de la chaîne d'entrée
+    int index_result = 0;         // Index pour construire la chaîne résultante
 
+    // Parcours de chaque caractère de la chaîne d'entrée
+    for (int ind = 0; ind < longueur; ind++) {
+        char c = value[ind];
+
+        // Si le caractère courant n'est pas égal au caractère "compo"
+        if (c != compo) {
+            result[index_result] = c; // Ajout du caractère à la chaîne résultante
+            index_result++;
+        }
+    }
+
+    // Terminer la chaîne résultante avec un '\0'
+    result[index_result] = '\0';
+}
+
+void recupererLettre(char *lettreJoueur, char *lettreRail, const char *mot, bool *lettreDebut) {
+    int longueur = strlen(mot);
+    int joueurIndex = 0; // Index pour remplir lettreJoueur
+    int railIndex = 0;   // Index pour remplir lettreRail
+    int insideParentheses = 0; // Indicateur pour savoir si on est entre parenthèses
+
+    for (int ind = 0; ind < longueur; ind++) {
+        char c = mot[ind];
+
+        if (c == '(') {
+            // On entre dans une zone entre parenthèses
+            insideParentheses = 1;
+            if (ind == 0) {
+                *lettreDebut = true; // Mettre lettreDebut à true
+            }
+        } else if (c == ')') {
+            // On sort de la zone entre parenthèses
+            insideParentheses = 0;
+        } else if (insideParentheses) {
+            // Si on est entre parenthèses, ajouter à lettreRail
+            lettreRail[railIndex] = c;
+            railIndex++;
+        } else if (c != ' ') {
+            // Si on est hors parenthèses et ce n'est pas un espace, ajouter à lettreJoueur
+            lettreJoueur[joueurIndex] = c;
+            joueurIndex++;
+        }
+    }
+
+    // Terminer les chaînes avec un '\0'
+    lettreJoueur[joueurIndex] = '\0';
+    lettreRail[railIndex] = '\0';
+}
+
+bool demanderMotRV(Joueur *joueur, Rail *rail) {
+    char mot[MAX_LETTRES_MOTS];
+    char motSansParantheses[MAX_LETTRES_MOTS];
+    scanf("%s", mot);
+
+    // Supprimer les parenthèses du mot
+    remise_forme(mot, '(', motSansParantheses);
+    remise_forme(motSansParantheses, ')', motSansParantheses);
+
+    if (strlen(motSansParantheses) > 8) {
+        return true;
+    }
+
+    char lettreJoueur[MAX_LETTRES_MOTS];
+    char lettreRail[MAX_LETTRES_MOTS];
+    bool lettreRailDebut = false;
+
+    // Récupérer les lettres
+    recupererLettre(lettreJoueur, lettreRail, mot, &lettreRailDebut);
+
+    // Vérifier si le mot sans parenthèses est dans le dictionnaire
+    if (estDansDictionnaire(motSansParantheses) == 0) {
+        return true;
+    }
+
+    // Vérifier que les lettres de lettreRail sont dans rail->lettres
+    int railLength = strlen(rail->lettres);
+    int lettreRailLength = strlen(lettreRail);
+
+    if (!lettreRailDebut) {
+        // Vérifier si les lettres de lettreRail correspondent au début de rail->lettres
+        for (int i = 0; i < lettreRailLength; i++) {
+            if (lettreRail[i] != rail->lettres[i]) {
+                return true;
+            }
+        }
+    } else {
+        // Vérifier si les lettres de lettreRail correspondent à la fin de rail->lettres
+        for (int i = 0; i < lettreRailLength; i++) {
+            if (lettreRail[i] != rail->lettres[railLength - lettreRailLength + i]) {
+                return true;
+            }
+        }
+    }
+
+    if(!verifLettre(joueur, strlen(lettreJoueur), lettreJoueur)) {
+        return true;
+    }
+
+    // Toutes les conditions sont satisfaites
+    return false;
+}

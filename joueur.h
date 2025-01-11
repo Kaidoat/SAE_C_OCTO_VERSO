@@ -8,6 +8,7 @@
 #include <stdbool.h>
 #include "Lettre.h"
 #include "Pile.h"
+#include "rail.h"
 
 enum { MAX_CHEVALET = 12, MAX_MOT = 4, TAILLE_CHEVALET = 12 , MAX_TAILLE_CHEVALETS=20};
 
@@ -27,6 +28,7 @@ void demanderMot(Joueur* joueur, char *mot, const bool premierTour);
 bool joueurSansLettre(const Joueur* joueur);
 int verifJoueur(Joueur* joueur);
 bool piocherLettre(Joueur* joueur, Pile* talon, Pile* expose);
+bool demanderMotRV(Joueur *joueur, Rail *rail);
 
 
 
