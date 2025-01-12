@@ -23,12 +23,3 @@ void initialiser_lettres(Lettre lettres[], int* taille_sac) {
     *taille_sac = index;
 }
 
-// Fonction pour mélanger les lettres du sac
-void melanger_lettres(Lettre lettres[], int taille) {
-    for (int i = taille - 1; i > 0; i--) {
-        int j = rand() % (i + 1);
-        Lettre temp = lettres[i];
-        lettres[i] = lettres[j];
-        lettres[j] = temp;
-    }
-}
