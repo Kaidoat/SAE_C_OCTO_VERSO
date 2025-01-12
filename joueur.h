@@ -91,13 +91,15 @@ bool joueurSansLettre(const Joueur* joueur);
  * @param [in] joueur Le joueur qui propose le mot.
  * @param [in] rail Le rail qui contient les lettres et qui impose certaines restrictions pour le mot.
  * @param [in, out]  motPreced contient le mot jouer par le joueur au tour d'avant
+ * @param [in, out] joueurPreced Un joueur qui contient l'etat du joueur avant qu'il joue
+ * @param [in, out] railPreced Un rail qui contient l'etat du rail avant qu'il soit mis à jour
  *
  * @return `true` si une des conditions échoue (mot invalide, lettres manquantes, etc.), `false` si toutes les conditions sont remplies.
  *
  * @pre Le rail doit être initialisé avec des lettres et le joueur doit avoir un chevalet avec des lettres.
  * @post Si le mot est valide, la fonction renvoie `false`, sinon `true`.
  */
-bool demanderMotRV(Joueur *joueur, Rail *rail, char *motPreced);
+bool demanderMotRV(Joueur *joueur, Rail *rail, char *motPreced, Joueur *joueurPreced,  Rail *railPreced);
 
 
 /**
@@ -111,12 +113,15 @@ bool demanderMotRV(Joueur *joueur, Rail *rail, char *motPreced);
  * @param [in] joueur Le joueur qui effectue l'action de piocher une lettre.
  * @param [in, out] talon La pile de lettres disponibles, dont le sommet est utilisé pour piocher une nouvelle lettre.
  * @param [in, out] expose La pile qui contient les lettres exposées, où la lettre choisie par le joueur est empilée.
+ * @param [in, out] joueurPreced Un joueur qui contient l'etat du joueur avant qu'il joue.
+ * @param [in, out] railPreced Un rail qui contient l'etat du rail avant qu'il soit mis à jour.
+ * @param [in] railActuel Le rail actuel
  *
  * @return `true` si la lettre choisie par le joueur n'est pas présente dans son chevalet, `false` sinon.
  *
  * @pre La pile `talon` doit contenir des lettres, et le joueur doit avoir un chevalet avec des lettres.
  */
-bool piocherLettre(Joueur* joueur, Pile* talon, Pile* expose);
+bool piocherLettre(Joueur* joueur, Pile* talon, Pile* expose, Joueur *joueurPreced,  Rail *railPreced,const Rail *railActuel);
 
 
 

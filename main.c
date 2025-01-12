@@ -42,9 +42,6 @@ enum {MAX_JOUEUR=2};
         demanderMot(&joueur[0], mot1,premierTour);
         demanderMot(&joueur[1], mot2,premierTour);
         initRail(&r, mot1, mot2);
-        precedent = r;
-        joueur1preced = joueur[0];
-        joueur2preced = joueur[1];
 
         premierTour = false;
         while (!joueurSansLettre(&joueur[0]) || !joueurSansLettre(&joueur[1])) {
@@ -64,14 +61,31 @@ enum {MAX_JOUEUR=2};
                 scanf(" %c",&commande);
                 getchar();
                 if (commande == '-') {
-                    rejouer = piocherLettre(&joueur[i], &talon, &expose);
+                    if (i==0) {
+                        rejouer = piocherLettre(&joueur[i], &talon, &expose, &joueur1preced, &precedent, &r);
+                    }
+                    else {
+                        rejouer = piocherLettre(&joueur[i], &talon, &expose, &joueur2preced, &precedent, &r);
+                    }
                 }
                 if (commande == 'R') {
-                    rejouer = demanderMotRV(&joueur[i], &r, motPreced);
+                    if (i==0) {
+                        rejouer = demanderMotRV(&joueur[i], &r, motPreced, &joueur1preced,  &precedent);
+                    }
+                    else {
+                        rejouer = demanderMotRV(&joueur[i], &r, motPreced, &joueur2preced,  &precedent);
+
+                    }
                 }
                 if (commande == 'V') {
                     retournerRail(&r);
-                    rejouer = demanderMotRV(&joueur[i], &r, motPreced);
+                    if (i==0) {
+                        rejouer = demanderMotRV(&joueur[i], &r, motPreced, &joueur1preced,  &precedent);
+                    }
+                    else {
+                        rejouer = demanderMotRV(&joueur[i], &r, motPreced, &joueur2preced,  &precedent);
+
+                    }
                     retournerRail(&r);
                 }
                 if (commande == 'r') {
@@ -92,9 +106,6 @@ enum {MAX_JOUEUR=2};
                     }
                     retournerRail(&r);
                 }
-                precedent = r;
-                joueur1preced = joueur[0];
-                joueur2preced = joueur[1];
             }
 
         }

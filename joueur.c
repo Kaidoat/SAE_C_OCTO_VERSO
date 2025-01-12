@@ -148,7 +148,7 @@ int verifUneLettre(Joueur* joueur, char lettre) {
     return -1;
 }
 
-bool piocherLettre(Joueur* joueur, Pile* talon, Pile* expose) {
+bool piocherLettre(Joueur* joueur, Pile* talon, Pile* expose, Joueur *joueurPreced,  Rail *railPreced,const Rail *railActuel) {
     char lettre;
     scanf("%c", &lettre);
     getchar();
@@ -158,6 +158,9 @@ bool piocherLettre(Joueur* joueur, Pile* talon, Pile* expose) {
     if (verifLettre == -1) {
         return true;
     }
+
+    *joueurPreced = *joueur;
+    *railPreced = *railActuel;
 
     Lettre lettreExpose = {joueur->chevalets[verifLettre], 0};
     empiler(expose, lettreExpose);
@@ -314,7 +317,7 @@ void mettreAJourRail(Rail *rail, char *lettreJoueur, bool lettreRailDebut) {
 
 
 
-bool demanderMotRV(Joueur *joueur, Rail *rail, char *motPreced) {
+bool demanderMotRV(Joueur *joueur, Rail *rail, char *motPreced, Joueur *joueurPreced,  Rail *railPreced) {
     char mot[MAX_LETTRES_MOTS];
     char motSansParantheses[MAX_LETTRES_MOTS];
     scanf("%s", mot);
@@ -362,6 +365,9 @@ bool demanderMotRV(Joueur *joueur, Rail *rail, char *motPreced) {
     if(!verifLettre(joueur, strlen(lettreJoueur), lettreJoueur)) {
         return true;
     }
+
+    *joueurPreced = *joueur;
+    *railPreced = *rail;
 
     mettreAJourRail(rail, lettreJoueur, lettreRailDebut);
 
