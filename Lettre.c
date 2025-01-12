@@ -1,6 +1,5 @@
 #include "Lettre.h"
-#include <stdio.h>
-#include <stdlib.h>
+
 
 
 // Fonction pour initialiser les lettres du sac

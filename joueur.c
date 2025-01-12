@@ -41,6 +41,19 @@ void afficherJoueur(const Joueur* joueur) {
     printf("\n");
 }
 
+
+/**
+ * @brief Vérifie si un joueur peut former un mot en utilisant un nombre donné de lettres.
+ *
+ * @param[in] joueur Le joueur dont les lettres doivent être vérifiées.
+ * @param[in] nbLettres Le nombre de lettres du mot à vérifier.
+ * @param[in] mot Le mot que le joueur souhaite former.
+ * @return <code>true</code> si le joueur peut former le mot avec les lettres disponibles, <code>false</code> sinon.
+ * @pre <code>joueur</code> doit pointer vers une structure valide et initialisée.
+ * @pre <code>mot</code> doit être une chaîne de caractères terminée par '\0'.
+ * @pre <code>nbLettres</code> doit correspondre à la longueur du mot <code>mot</code>.
+ */
+
 bool verifLettre(Joueur* joueur, int nbLettres, const char* mot) {
     // On travaille directement sur le chevalet du joueur
     bool lettresValides = true; // Indicateur pour vérifier la validité du mot
@@ -111,15 +124,21 @@ bool joueurSansLettre(const Joueur* joueur) {
     return joueur->nbLettres == 0;
 }
 
-int verifJoueur(Joueur* joueur){
 
-    if (joueurSansLettre(joueur)) {
-        return 1;
-    } else {
-        return 0;
-    }
-}
-
+/**
+ * @brief Vérifie si un joueur possède une lettre spécifique dans son chevalet.
+ *
+ * Cette fonction parcourt le chevalet du joueur et vérifie si la lettre donnée
+ * y est présente. Si la lettre est trouvée, elle renvoie l'indice de la lettre dans le chevalet.
+ * Si la lettre n'est pas présente, elle renvoie `-1`.
+ *
+ * @param [in] joueur Le joueur dont on souhaite vérifier le chevalet.
+ * @param [in] lettre La lettre à rechercher dans le chevalet du joueur.
+ *
+ * @return L'indice de la lettre dans le chevalet si elle est trouvée, `-1` sinon.
+ *
+ * @pre Le joueur doit être initialisé avec un chevalet contenant des lettres.
+ */
 int verifUneLettre(Joueur* joueur, char lettre) {
     for (int i = 0; i < MAX_CHEVALET; i++) {
         if (joueur->chevalets[i] == lettre) {
@@ -147,6 +166,21 @@ bool piocherLettre(Joueur* joueur, Pile* talon, Pile* expose) {
     return false;
 }
 
+
+/**
+ * @brief Remet en forme une chaîne de caractères en supprimant toutes les occurrences d'un caractère spécifié.
+ *
+ * Cette fonction prend une chaîne d'entrée `value`, et retire toutes les occurrences du caractère `compo`.
+ * Le résultat est stocké dans la chaîne `result`, qui doit être suffisamment grande pour contenir la chaîne résultante.
+ *
+ * @param [in] value La chaîne d'entrée qui contient les caractères à traiter.
+ * @param [in] compo Le caractère à supprimer de la chaîne d'entrée.
+ * @param [out] result La chaîne résultante, qui contiendra la chaîne `value` sans le caractère `compo`.
+ *
+ * @pre La chaîne `result` doit être initialisée et être suffisamment grande pour contenir la chaîne résultante.
+ *
+ * @post La chaîne `result` contient la même chaîne que `value`, mais sans les occurrences du caractère `compo`.
+ */
 void remise_forme(const char *value, char compo, char *result) {
     int longueur = strlen(value); // Longueur de la chaîne d'entrée
     int index_result = 0;         // Index pour construire la chaîne résultante
@@ -166,6 +200,22 @@ void remise_forme(const char *value, char compo, char *result) {
     result[index_result] = '\0';
 }
 
+
+/**
+ * @brief Sépare les lettres d'un mot entre celles qui sont avant et après les parenthèses.
+ *
+ * Cette fonction prend un mot en entrée et le sépare en deux parties :
+ * - Les lettres avant les parenthèses sont ajoutées à `lettreJoueur`.
+ * - Les lettres à l'intérieur des parenthèses sont ajoutées à `lettreRail`.
+ * De plus, la fonction modifie le flag `lettreDebut` à `true` si le mot commence par une parenthèse.
+ *
+ * @param [out] lettreJoueur La chaîne qui contiendra les lettres avant les parenthèses.
+ * @param [out] lettreRail La chaîne qui contiendra les lettres à l'intérieur des parenthèses.
+ * @param [in] mot La chaîne de caractères représentant le mot à traiter.
+ * @param [out] lettreDebut Un indicateur qui sera mis à `true` si le mot commence par une parenthèse, sinon il reste inchangé.
+ *
+ * @pre Les chaînes `lettreJoueur` et `lettreRail` doivent être initialisées et être suffisamment grandes pour contenir les lettres extraites.
+ */
 void recupererLettre(char *lettreJoueur, char *lettreRail, const char *mot, bool *lettreDebut) {
     int longueur = strlen(mot);
     int joueurIndex = 0; // Index pour remplir lettreJoueur
@@ -249,6 +299,11 @@ bool demanderMotRV(Joueur *joueur, Rail *rail) {
         return true;
     }
 
+
+
     // Toutes les conditions sont satisfaites
     return false;
 }
+
+// 1: verif quand le mot est egale a 8 caractères, enlever une lettre de la main du joueur
+// 2: mettre a jour le rail

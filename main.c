@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "dictionnaire.h"
-#include "jeu.h"
+
 #include "rail.h"
 #include "joueur.h"
 #include "Lettre.h"
@@ -43,7 +42,7 @@ enum {MAX_JOUEUR=2};
         initRail(&r, mot1, mot2);
 
         premierTour = false;
-        while (!verifJoueur(&joueur[1]) || !verifJoueur(&joueur[2])) {
+        while (!joueurSansLettre(&joueur[1]) || !joueurSansLettre(&joueur[2])) {
             for (int i =0; i < MAX_JOUEUR; i++) {
                 if (rejouer) {
                     rejouer = false;
