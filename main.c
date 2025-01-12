@@ -14,7 +14,6 @@ enum {MAX_JOUEUR=2};
     int main() {
         srand(time(NULL)); // Initialiser le générateur de nombres aléatoires
 
-        // Initialisation des lettres dans le sac
         Lettre lettres[TAILLE_LETTRES];
         Pile talon;
         Pile expose;
@@ -74,7 +73,6 @@ enum {MAX_JOUEUR=2};
                     }
                     else {
                         rejouer = demanderMotRV(&joueur[i], &r, motPreced, &joueur2preced,  &precedent);
-
                     }
                 }
                 if (commande == 'V') {
@@ -84,7 +82,6 @@ enum {MAX_JOUEUR=2};
                     }
                     else {
                         rejouer = demanderMotRV(&joueur[i], &r, motPreced, &joueur2preced,  &precedent);
-
                     }
                     retournerRail(&r);
                 }
